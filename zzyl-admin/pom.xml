@@ -61,6 +61,11 @@
             <artifactId>zzyl-generator</artifactId>
         </dependency>
 
+        <!-- 服务模块-->
+        <dependency>
+            <groupId>com.zzyl</groupId>
+            <artifactId>zzyl-nursing-platform</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
