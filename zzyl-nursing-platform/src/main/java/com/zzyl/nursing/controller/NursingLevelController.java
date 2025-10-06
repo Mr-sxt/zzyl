@@ -2,6 +2,8 @@ package com.zzyl.nursing.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import com.zzyl.common.core.page.TableDataInfo;
  * @author ruoyi
  * @date 2025-10-06
  */
+@Api
 @RestController
 @RequestMapping("/nursing/level")
 public class NursingLevelController extends BaseController
