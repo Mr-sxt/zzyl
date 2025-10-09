@@ -97,14 +97,19 @@ token:
   # 令牌有效期（默认30分钟）
   expireTime: 30
 
-# MyBatis配置
-mybatis:
-  # 搜索指定包别名
+# MyBatis-plus配置
+mybatis-plus:
+  #搜索指定包别名
   typeAliasesPackage: com.zzyl.**.domain
-  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  #配置扫描的mapper文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # 加载全局的配置文件
-  configLocation: classpath:mybatis/mybatis-config.xml
+  #全局配置
+  global-config:
+    db-config:
+      id-type: auto #id自动生成策略为自增
+  configuration:
+    #驼峰命名
+    map-underscore-to-camel-case: true
 
 # PageHelper分页插件
 pagehelper:

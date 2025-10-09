@@ -35,6 +35,8 @@
         <logback.version>1.2.13</logback.version>
         <spring-security.version>5.7.14</spring-security.version>
         <spring-framework.version>5.3.39</spring-framework.version>
+        <lombok.version>1.18.30</lombok.version>
+        <mybatis-plus-spring-boot.version>3.5.2</mybatis-plus-spring-boot.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -225,6 +227,24 @@
                 <version>${zzyl.version}</version>
             </dependency>
 
+            <!--Lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!--mybatis-plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus-spring-boot.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
