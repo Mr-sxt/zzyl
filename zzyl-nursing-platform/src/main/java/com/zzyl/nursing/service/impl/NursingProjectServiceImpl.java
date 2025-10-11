@@ -5,6 +5,7 @@ import com.zzyl.common.utils.DateUtils;
 import com.zzyl.nursing.domain.NursingProject;
 import com.zzyl.nursing.mapper.NursingProjectMapper;
 import com.zzyl.nursing.service.INursingProjectService;
+import com.zzyl.nursing.vo.NursingProjectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,5 +101,10 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
     {
 //        return nursingProjectMapper.deleteNursingProjectById(id);
         return removeById(id) ? 1 : 0;
+    }
+
+    @Override
+    public List<NursingProjectVo> getAll() {
+        return nursingProjectMapper.getAll();
     }
 }

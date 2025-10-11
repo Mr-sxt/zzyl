@@ -2,12 +2,21 @@ package com.zzyl.nursing.service.impl;
 
 import java.util.List;
 import com.zzyl.common.utils.DateUtils;
+import com.zzyl.common.utils.bean.BeanUtils;
+import com.zzyl.nursing.domain.NursingProjectPlan;
+import com.zzyl.nursing.dto.NursingPlanDto;
+import com.zzyl.nursing.mapper.NursingProjectPlanMapper;
+import com.zzyl.nursing.vo.NursingPlanVo;
+import com.zzyl.nursing.vo.NursingProjectPlanVo;
+import com.zzyl.nursing.vo.NursingProjectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zzyl.nursing.mapper.NursingPlanMapper;
 import com.zzyl.nursing.domain.NursingPlan;
 import com.zzyl.nursing.service.INursingPlanService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Arrays;
 
 /**
@@ -22,6 +31,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Autowired
     private NursingPlanMapper nursingPlanMapper;
 
+    @Autowired
+    private NursingProjectPlanMapper nursingProjectPlanMapper;
+
     /**
      * 查询护理计划
      * 
@@ -29,9 +41,17 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      * @return 护理计划
      */
     @Override
-    public NursingPlan selectNursingPlanById(Long id)
+    public NursingPlanVo selectNursingPlanById(Long id)
     {
-        return getById(id);
+        //查询护理计划基本信息
+        NursingPlan nursingPlan = nursingPlanMapper.selectById(id);
+        //查询关联的集合
+        List<NursingProjectPlanVo> projectPlans = nursingProjectPlanMapper.selectByPlanId(id);
+        //合并对象
+        NursingPlanVo nursingPlanVo = new NursingPlanVo();
+        BeanUtils.copyProperties(nursingPlan,nursingPlanVo);
+        nursingPlanVo.setProjectPlans(projectPlans);
+        return nursingPlanVo;
     }
 
     /**
@@ -48,26 +68,47 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
 
     /**
      * 新增护理计划
-     * 
-     * @param nursingPlan 护理计划
+     *
      * @return 结果
      */
     @Override
-    public int insertNursingPlan(NursingPlan nursingPlan)
+    @Transactional(rollbackFor = Exception.class)
+    public int insertNursingPlan(NursingPlanDto dto)
     {
-        return save(nursingPlan) ? 1 : 0;
+        //保存护理计划
+        NursingPlan nursingPlan = new NursingPlan();
+        BeanUtils.copyProperties(dto,nursingPlan);
+        nursingPlan.setCreateTime(DateUtils.getNowDate());
+        nursingPlanMapper.insertNursingPlan(nursingPlan);
+
+        //保存关系
+        int cont = nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(), nursingPlan.getId());
+        return cont == 0 ? 0 : 1;
     }
 
     /**
      * 修改护理计划
      * 
-     * @param nursingPlan 护理计划
+     * @param dto 护理计划
      * @return 结果
      */
     @Override
-    public int updateNursingPlan(NursingPlan nursingPlan)
+    @Transactional(rollbackFor = Exception.class)
+    public int updateNursingPlan(NursingPlanDto dto)
     {
-        return updateById(nursingPlan)? 1 : 0;
+        //判断护理项目是否为空
+        if(dto.getProjectPlans() != null && !dto.getProjectPlans().isEmpty()){
+            //删除护理计划对应的护理列表
+            nursingProjectPlanMapper.deleteByNursingPlanId(dto.getId());
+            //批量保存护理项目
+            nursingProjectPlanMapper.batchInsert(dto.getProjectPlans(), dto.getId());
+        }
+
+        //项目为空直接进行保存
+        NursingPlan nursingPlan = new NursingPlan();
+        BeanUtils.copyProperties(dto,nursingPlan);
+        //修改护理计划
+        return nursingPlanMapper.updateNursingPlan(nursingPlan);
     }
 
     /**
@@ -91,6 +132,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Override
     public int deleteNursingPlanById(Long id)
     {
+        //删除护理计划关联的护理项目
+        nursingProjectPlanMapper.deleteByNursingPlanId(id);
+        //删除护理计划
         return removeById(id)? 1 : 0;
     }
 }
