@@ -3,6 +3,7 @@ package com.zzyl.nursing.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zzyl.nursing.vo.NursingLevelVo;
 import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,10 @@ public class NursingLevelController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('nursing:level:list')")
     @GetMapping("/list")
-    public TableDataInfo list(NursingLevel nursingLevel)
+    public TableDataInfo<List<NursingLevelVo>> list(NursingLevel nursingLevel)
     {
         startPage();
-        List<NursingLevel> list = nursingLevelService.selectNursingLevelList(nursingLevel);
+        List<NursingLevelVo> list = nursingLevelService.selectNursingLevelVoList(nursingLevel);
         return getDataTable(list);
     }
 

@@ -115,4 +115,13 @@ public class NursingPlanController extends BaseController
     {
         return toAjax(nursingPlanService.deleteNursingPlanById(id));
     }
+
+    /**
+     * 查询所有护理计划
+     */
+    @ApiOperation("查询所有护理计划")
+    @GetMapping("/all")
+    public R<List<NursingPlan>> ListAll(){
+        return R.ok(nursingPlanService.getAllNursingPlans());
+    }
 }

@@ -137,4 +137,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
         //删除护理计划
         return removeById(id)? 1 : 0;
     }
+
+    @Override
+    public List<NursingPlan> getAllNursingPlans() {
+        return nursingPlanMapper.getAllNursingPlans();
+    }
 }

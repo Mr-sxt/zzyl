@@ -4,6 +4,8 @@ import java.util.List;
 import com.zzyl.nursing.domain.NursingPlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
 /**
  * 护理计划Mapper接口
  * 
@@ -60,4 +62,11 @@ public interface NursingPlanMapper extends BaseMapper<NursingPlan>
      * @return 结果
      */
     public int deleteNursingPlanByIds(Long[] ids);
+
+    /**
+     * 获取所有护理计划
+     * @return
+     */
+    @Select("select id, sort_no, plan_name, status from nursing_plan")
+    List<NursingPlan> getAllNursingPlans();
 }
