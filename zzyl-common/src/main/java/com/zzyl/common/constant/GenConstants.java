@@ -1,7 +1,5 @@
 package com.zzyl.common.constant;
 
-import java.time.LocalDateTime;
-
 /**
  * 代码生成通用常量
  * 
@@ -107,8 +105,9 @@ public class GenConstants
 
     /** 时间类型 */
     public static final String TYPE_DATE = "Date";
-    /**LocalDateTime类型 */
-    public static final String TYPE_LOCAL_DATE_TYPE = "LocalDate";
+
+    /** LocalDateTime时间类型 */
+    public static final String TYPE_LOCAL_DATE_TYPE = "LocalDateTime";
 
     /** 模糊查询 */
     public static final String QUERY_LIKE = "LIKE";

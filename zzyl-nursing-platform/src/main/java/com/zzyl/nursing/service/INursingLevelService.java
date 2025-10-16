@@ -8,8 +8,8 @@ import com.zzyl.nursing.vo.NursingLevelVo;
 /**
  * 护理等级Service接口
  * 
- * @author ruoyi
- * @date 2025-10-08
+ * @author alexis
+ * @date 2025-06-02
  */
 public interface INursingLevelService extends IService<NursingLevel>
 {
@@ -63,9 +63,14 @@ public interface INursingLevelService extends IService<NursingLevel>
 
     /**
      * 查询护理等级Vo列表
-     *
-     * @param nursingLevel 护理等级
-     * @return 护理等级集合
+     * @param nursingLevel  条件
+     * @return  结果
      */
     List<NursingLevelVo> selectNursingLevelVoList(NursingLevel nursingLevel);
+
+    /**
+     * 查询所有护理等级
+     * @return  结果
+     */
+    List<NursingLevel> listAll();
 }

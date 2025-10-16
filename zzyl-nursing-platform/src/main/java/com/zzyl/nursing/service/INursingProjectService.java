@@ -1,16 +1,15 @@
 package com.zzyl.nursing.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.zzyl.nursing.domain.NursingProject;
-import com.zzyl.nursing.vo.NursingProjectVo;
-
 import java.util.List;
+import com.zzyl.nursing.domain.NursingProject;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzyl.nursing.vo.NursingProjectVo;
 
 /**
  * 护理项目Service接口
  * 
- * @author ruoyi
- * @date 2025-10-05
+ * @author alexis
+ * @date 2025-06-02
  */
 public interface INursingProjectService extends IService<NursingProject>
 {
@@ -63,8 +62,8 @@ public interface INursingProjectService extends IService<NursingProject>
     public int deleteNursingProjectById(Long id);
 
     /**
-     * 获取护理项目列表
-     * @return
+     * 查询所有护理项目
+     * @return  护理项目列表
      */
     List<NursingProjectVo> getAll();
 }

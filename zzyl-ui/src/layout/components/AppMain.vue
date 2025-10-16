@@ -6,17 +6,15 @@
       </keep-alive>
     </transition>
     <iframe-toggle />
-    <copyright />
   </section>
 </template>
 
 <script>
-import copyright from "./Copyright/index"
 import iframeToggle from "./IframeToggle/index"
 
 export default {
   name: 'AppMain',
-  components: { iframeToggle, copyright },
+  components: { iframeToggle },
   computed: {
     cachedViews() {
       return this.$store.state.tagsView.cachedViews
@@ -35,7 +33,7 @@ export default {
   },
   methods: {
     addIframe() {
-      const { name } = this.$route
+      const {name} = this.$route
       if (name && this.$route.meta.link) {
         this.$store.dispatch('tagsView/addIframeView', this.$route)
       }
@@ -54,18 +52,7 @@ export default {
 }
 
 .fixed-header + .app-main {
-  overflow-y: auto;
-  scrollbar-gutter: auto;
-  height: calc(100vh - 50px);
-  min-height: 0px;
-}
-
-.app-main:has(.copyright) {
-  padding-bottom: 36px;
-}
-
-.fixed-header + .app-main {
-  margin-top: 50px;
+  padding-top: 50px;
 }
 
 .hasTagsView {
@@ -75,14 +62,19 @@ export default {
   }
 
   .fixed-header + .app-main {
-    margin-top: 84px;
-    height: calc(100vh - 84px);
-    min-height: 0px;
+    padding-top: 84px;
   }
 }
 </style>
 
 <style lang="scss">
+// fix css style bug in open el-dialog
+.el-popup-parent--hidden {
+  .fixed-header {
+    padding-right: 6px;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

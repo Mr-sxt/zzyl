@@ -87,7 +87,7 @@
               <s> 满104748341 </s> <s> 满160110482 </s> <s> 满170801498 </s> <s> 满108482800 </s> 
               <s> 满101046199 </s> <s> 满136919097 </s> <s> 满143961921 </s> <s> 满174951577 </s> 
               <s> 满161281055 </s> <s> 满138988063 </s> <s> 满151450850 </s> <s> 满224622315 </s>
-              <s> 满287842588 </s> <s> 满187944233 </s> <s> 满228578329 </s> <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=GsOo-OLz53J8y_9TPoO6XXSGNRTgbFxA&authKey=R7Uy%2Feq%2BZsoKNqHvRKhiXpypW7DAogoWapOawUGHokJSBIBIre2%2FoiAZeZBSLuBc&noverify=0&group_code=191164766" target="_blank">191164766</a>
+              <s> 满287842588 </s> <s> 满187944233 </s> <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=G6r5KGCaa3pqdbUSXNIgYloyb8e0_L0D&authKey=4w8tF1eGW7%2FedWn%2FHAypQksdrML%2BDHolQSx7094Agm7Luakj9EbfPnSTxSi2T1LQ&noverify=0&group_code=228578329" target="_blank">228578329</a>
             </p>
             <p>
               <i class="el-icon-chat-dot-round"></i> 微信：<a
@@ -111,42 +111,6 @@
             <span>更新日志</span>
           </div>
           <el-collapse accordion>
-            <el-collapse-item title="v3.9.0 - 2025-05-28">
-              <ol>
-                <li>优化菜单搜索查询页</li>
-                <li>导航栏显示昵称&设置</li>
-                <li>菜单管理新增路由名称</li>
-                <li>添加底部版权信息&开关</li>
-                <li>分配角色禁用不允许勾选</li>
-                <li>Excel导入导出支持多图片</li>
-                <li>添加页签图标显示开关功能</li>
-                <li>上传组件新增拖动排序属性</li>
-                <li>显隐列组件支持全选/全不选</li>
-                <li>初始密码支持自定义修改策略</li>
-                <li>账号密码支持自定义更新周期</li>
-                <li>代码生成列表支持按时间排序</li>
-                <li>支持富文本复制粘贴图片上传至url</li>
-                <li>支持文件&图片组件自定义地址&参数</li>
-                <li>升级tomcat到最新版本9.0.105</li>
-                <li>升级oshi到最新版本6.8.1</li>
-                <li>升级fastjson到最新版2.0.57</li>
-                <li>升级commons.io到最新版本2.19.0</li>
-                <li>package.json移除runjs依赖</li>
-                <li>package.json移除eslint依赖</li>
-                <li>package.json移除vue-meta依赖</li>
-                <li>修复代码生成主子表校验必填失效问题</li>
-                <li>优化前端树结构性能问题</li>
-                <li>优化前端处理路由函数代码</li>
-                <li>优化文件上传组件新增类型</li>
-                <li>优化顶部菜单搜索栏为多层级显示</li>
-                <li>优化文件&图片上传组件新增disabled属性</li>
-                <li>优化空指针异常时无法获取错误信息问题</li>
-                <li>优化定时任务字符包含多个括号导致数据错误</li>
-                <li>优化登录&注册页表头使用VUE_APP_TITLE配置值</li>
-                <li>优化导出Excel日期格式双击离开后与设定的格式不一致问题</li>
-                <li>其他细节优化</li>
-              </ol>
-            </el-collapse-item>
             <el-collapse-item title="v3.8.9 - 2024-12-30">
               <ol>
                 <li>用户管理支持分栏拖动</li>
@@ -1059,7 +1023,7 @@ export default {
   data() {
     return {
       // 版本号
-      version: "3.9.0"
+      version: "3.8.9"
     }
   },
   methods: {

@@ -4,6 +4,7 @@ package ${packageName}.domain;
 import ${import};
 #end
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,11 +26,10 @@ import com.zzyl.common.core.domain.TreeEntity;
 #elseif($table.tree)
 #set($Entity="TreeEntity")
 #end
-
-@ApiModel(value = "${ClassName}对象", description = "${functionName}")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value="${ClassName}对象", description="${functionName}")
 public class ${ClassName} extends ${Entity}
 {
     private static final long serialVersionUID = 1L;
@@ -53,7 +53,7 @@ public class ${ClassName} extends ${Entity}
     @Excel(name = "${comment}")
 #end
 #end
-    @ApiModelProperty(value = "${column.columnComment}")
+    @ApiModelProperty("${column.columnComment}")
     private $column.javaType $column.javaField;
 
 #end

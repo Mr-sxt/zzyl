@@ -19,13 +19,13 @@ public class NursingPlanVo {
      * 排序号
      */
     @ApiModelProperty(value = "护理计划排序号")
-    private Long sortNo;
+    private Integer sortNo;
 
     @ApiModelProperty(value = "护理计划名称")
     private String planName;
 
     @ApiModelProperty(value = "状态（0：禁用，1：启用）")
-    private Long status;
+    private Integer status;
 
     @ApiModelProperty(value = "护理计划项目列表")
     List<NursingProjectPlanVo> projectPlans;

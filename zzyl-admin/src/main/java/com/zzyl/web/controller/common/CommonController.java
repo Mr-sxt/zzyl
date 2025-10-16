@@ -2,7 +2,6 @@ package com.zzyl.web.controller.common;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.zzyl.common.config.RuoYiConfig;
+import com.zzyl.common.constant.Constants;
 import com.zzyl.common.core.domain.AjaxResult;
 import com.zzyl.common.utils.StringUtils;
 import com.zzyl.common.utils.file.FileUploadUtils;
@@ -86,6 +86,7 @@ public class CommonController
             String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
 //            String fileName = FileUploadUtils.upload(filePath, file);
+
             String url = aliyunOSSOperator.upload(file.getBytes(), file.getOriginalFilename());
 //            String url = serverConfig.getUrl() + fileName;
             AjaxResult ajax = AjaxResult.success();
@@ -154,7 +155,7 @@ public class CommonController
             // 本地资源路径
             String localPath = RuoYiConfig.getProfile();
             // 数据库资源地址
-            String downloadPath = localPath + FileUtils.stripPrefix(resource);
+            String downloadPath = localPath + StringUtils.substringAfter(resource, Constants.RESOURCE_PREFIX);
             // 下载名称
             String downloadName = StringUtils.substringAfterLast(downloadPath, "/");
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);

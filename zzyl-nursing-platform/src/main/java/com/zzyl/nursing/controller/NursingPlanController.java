@@ -31,8 +31,8 @@ import com.zzyl.common.core.page.TableDataInfo;
 /**
  * 护理计划Controller
  * 
- * @author feel
- * @date 2025-10-09
+ * @author alexis
+ * @date 2025-06-02
  */
 @Api("护理计划管理")
 @RestController
@@ -62,7 +62,7 @@ public class NursingPlanController extends BaseController
     @PreAuthorize("@ss.hasPermi('nursing:plan:export')")
     @Log(title = "护理计划", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(@ApiParam("导出的条件查询") HttpServletResponse response, NursingPlan nursingPlan)
+    public void export(@ApiParam("导出的查询条件") HttpServletResponse response, NursingPlan nursingPlan)
     {
         List<NursingPlan> list = nursingPlanService.selectNursingPlanList(nursingPlan);
         ExcelUtil<NursingPlan> util = new ExcelUtil<NursingPlan>(NursingPlan.class);
@@ -75,7 +75,7 @@ public class NursingPlanController extends BaseController
     @ApiOperation("获取护理计划详细信息")
     @PreAuthorize("@ss.hasPermi('nursing:plan:query')")
     @GetMapping(value = "/{id}")
-    public R<NursingPlanVo> getInfo(@ApiParam(value = "护理计划ID" ,required = true) @PathVariable("id") Long id)
+    public R<NursingPlanVo> getInfo(@PathVariable("id") @ApiParam("护理计划ID") Long id)
     {
         return R.ok(nursingPlanService.selectNursingPlanById(id));
     }
@@ -87,7 +87,7 @@ public class NursingPlanController extends BaseController
     @PreAuthorize("@ss.hasPermi('nursing:plan:add')")
     @Log(title = "护理计划", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@ApiParam("新增的护理计划对象") @RequestBody NursingPlanDto dto)
+    public AjaxResult add(@RequestBody @ApiParam("新增的护理计划对象") NursingPlanDto dto)
     {
         return toAjax(nursingPlanService.insertNursingPlan(dto));
     }
@@ -99,7 +99,7 @@ public class NursingPlanController extends BaseController
     @PreAuthorize("@ss.hasPermi('nursing:plan:edit')")
     @Log(title = "护理计划", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@ApiParam("修改护理计划对象") @RequestBody NursingPlanDto dto)
+    public AjaxResult edit(@RequestBody @ApiParam("修改的护理计划对象") NursingPlanDto dto)
     {
         return toAjax(nursingPlanService.updateNursingPlan(dto));
     }
@@ -111,7 +111,7 @@ public class NursingPlanController extends BaseController
     @PreAuthorize("@ss.hasPermi('nursing:plan:remove')")
     @Log(title = "护理计划", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{id}")
-    public AjaxResult remove(@ApiParam("删除护理计划ID") @PathVariable Long id)
+    public AjaxResult remove(@PathVariable @ApiParam("要删除的护理计划ID") Long id)
     {
         return toAjax(nursingPlanService.deleteNursingPlanById(id));
     }
@@ -119,9 +119,10 @@ public class NursingPlanController extends BaseController
     /**
      * 查询所有护理计划
      */
-    @ApiOperation("查询所有护理计划")
     @GetMapping("/all")
-    public R<List<NursingPlan>> ListAll(){
+    @ApiOperation(value = "获取所有护理计划")
+    public R<List<NursingPlan>> listAll()
+    {
         return R.ok(nursingPlanService.getAllNursingPlans());
     }
 }

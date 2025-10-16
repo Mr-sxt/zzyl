@@ -5,7 +5,7 @@
     <parent>
         <artifactId>zzyl</artifactId>
         <groupId>com.zzyl</groupId>
-        <version>3.9.0</version>
+        <version>3.8.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -132,7 +132,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--mybatis-plus-->
+        <!--MyBatisPlus-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -140,6 +140,12 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-annotation</artifactId>
+        </dependency>
+
+        <!--hutool工具包-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
 
     </dependencies>

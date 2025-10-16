@@ -38,12 +38,14 @@
         where id = #{id}
     </select>
     <select id="selectByNursingPlanId" resultType="com.zzyl.nursing.vo.NursingProjectPlanVo">
-        select id, plan_id, project_id, execute_time, execute_cycle, execute_frequency, create_time, create_by
-        from nursing_project_plan where plan_id = #{planId}
-
-    </select>
-    <select id="selectByPlanId" resultType="com.zzyl.nursing.vo.NursingProjectPlanVo">
-        select id, plan_id, project_id, execute_time, execute_cycle, execute_frequency
+        select id,
+               plan_id,
+               project_id,
+               execute_time,
+               execute_cycle,
+               execute_frequency,
+               create_time,
+               create_by
         from nursing_project_plan
         where plan_id = #{planId}
     </select>
@@ -76,10 +78,11 @@
         </trim>
     </insert>
     <insert id="batchInsert">
-            insert into nursing_project_plan (plan_id, project_id, execute_time, execute_cycle, execute_frequency, create_time, remark) values
-            <foreach item="item" index="index" collection="List" separator=",">
-                (#{planId}, #{item.projectId}, #{item.executeTime}, #{item.executeCycle}, #{item.executeFrequency}, sysdate(), #{item.remark})
-            </foreach>
+        insert into nursing_project_plan (plan_id, project_id, execute_time, execute_cycle, execute_frequency, create_time, remark)
+        values
+        <foreach item="item" collection="list" separator=",">
+            (#{planId}, #{item.projectId}, #{item.executeTime}, #{item.executeCycle}, #{item.executeFrequency}, sysdate(), #{item.remark})
+        </foreach>
     </insert>
 
     <update id="updateNursingProjectPlan" parameterType="NursingProjectPlan">

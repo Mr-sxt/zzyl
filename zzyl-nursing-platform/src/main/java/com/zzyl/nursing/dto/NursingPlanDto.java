@@ -16,7 +16,7 @@ public class NursingPlanDto {
      * 排序号
      */
     @ApiModelProperty(value = "排序号")
-    private Long sortNo;
+    private Integer sortNo;
 
     /**
      * 计划名称
@@ -28,7 +28,7 @@ public class NursingPlanDto {
      * 状态（0：禁用，1：启用）
      */
     @ApiModelProperty(value = "状态（0：禁用，1：启用）")
-    private Long status;
+    private Integer status;
 
     /**
      * 护理计划关联项目列表
