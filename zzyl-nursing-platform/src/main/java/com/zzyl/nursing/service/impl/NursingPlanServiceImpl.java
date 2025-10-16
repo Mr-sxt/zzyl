@@ -3,15 +3,19 @@ package com.zzyl.nursing.service.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.zzyl.common.constant.CacheConstants;
 import com.zzyl.common.utils.DateUtils;
 import com.zzyl.common.utils.bean.BeanUtils;
+import com.zzyl.nursing.domain.CheckInConfig;
 import com.zzyl.nursing.domain.NursingProjectPlan;
 import com.zzyl.nursing.dto.NursingPlanDto;
 import com.zzyl.nursing.mapper.NursingProjectPlanMapper;
 import com.zzyl.nursing.vo.NursingPlanVo;
 import com.zzyl.nursing.vo.NursingProjectPlanVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import com.zzyl.nursing.mapper.NursingPlanMapper;
 import com.zzyl.nursing.domain.NursingPlan;
@@ -33,6 +37,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
 
     @Autowired
     private NursingProjectPlanMapper nursingProjectPlanMapper;
+
+    @Autowired
+    private RedisTemplate<Object,Object> redisTemplate;
 
     /**
      * 查询护理计划
@@ -80,6 +87,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Transactional(rollbackFor = Exception.class)
     public int insertNursingPlan(NursingPlanDto dto)
     {
+        //删除缓存
+        redisTemplate.delete(CacheConstants.NURSING_PLANS_LIST_KEY);
+
         // 1.保存护理计划
         NursingPlan nursingPlan = new NursingPlan();
         BeanUtils.copyProperties(dto, nursingPlan);
@@ -102,6 +112,9 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Transactional(rollbackFor = Exception.class)
     public int updateNursingPlan(NursingPlanDto dto)
     {
+        //删除缓存
+        redisTemplate.delete(CacheConstants.NURSING_PLANS_LIST_KEY);
+
         // 判断dto中的护理项目是否为空，如果不为空，先删除护理计划关联的所有护理项目，再重新批量保存最新的关联
         if (dto.getProjectPlans() != null && !dto.getProjectPlans().isEmpty()) {
             // 删除护理计划对应的护理项目列表
@@ -127,7 +140,10 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Override
     public int deleteNursingPlanByIds(Long[] ids)
     {
-        return removeByIds(Arrays.asList(ids)) ? 1 : 0;
+        //删除缓存
+        redisTemplate.delete(CacheConstants.NURSING_PLANS_LIST_KEY);
+        boolean b = removeByIds(Arrays.asList(ids));
+        return b ? 1 : 0;
     }
 
     /**
@@ -140,6 +156,8 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
     @Transactional(rollbackFor = Exception.class)
     public int deleteNursingPlanById(Long id)
     {
+        //删除缓存
+        redisTemplate.delete(CacheConstants.NURSING_PLANS_LIST_KEY);
         // 删除护理计划关联的护理项目
         nursingProjectPlanMapper.deleteByNursingPlanId(id);
         // 删除护理计划
@@ -153,8 +171,20 @@ public class NursingPlanServiceImpl extends ServiceImpl<NursingPlanMapper, Nursi
      */
     @Override
     public List<NursingPlan> getAllNursingPlans() {
+        //先在缓存中查询数据
+        List<NursingPlan> list = (List<NursingPlan>) redisTemplate.opsForValue().get(CacheConstants.NURSING_PLANS_LIST_KEY);
+
+        //判断是否存在
+        if(ObjectUtil.isNotEmpty(list)){
+            return list;
+        }
+
+        //不存在则在数据库查询
         LambdaQueryWrapper<NursingPlan> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(NursingPlan::getStatus, 1);
-        return list(queryWrapper);
+        list = list(queryWrapper);
+        //存入缓存
+        redisTemplate.opsForValue().set(CacheConstants.NURSING_PLANS_LIST_KEY,list);
+        return list;
     }
 }
