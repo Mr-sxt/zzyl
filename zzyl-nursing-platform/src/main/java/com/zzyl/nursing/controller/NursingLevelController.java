@@ -114,4 +114,13 @@ public class NursingLevelController extends BaseController
     {
         return toAjax(nursingLevelService.deleteNursingLevelByIds(ids));
     }
+
+    /**
+     * 获取护理等级下拉列表
+     */
+    @GetMapping("/all")
+    public R<List<NursingLevel>> listAll()
+    {
+        return R.ok(nursingLevelService.listAll());
+    }
 }
