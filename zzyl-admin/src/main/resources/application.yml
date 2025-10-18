@@ -137,6 +137,10 @@ aliyun:
   oss:
     endpoint: https://oss-cn-beijing.aliyuncs.com
     bucketName: rman369
+  tongyi:
+    api-key: DASHSCOPE_API_KEY
+    base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    model: qwen-plus
 
 dept:
   nursingId: 201
