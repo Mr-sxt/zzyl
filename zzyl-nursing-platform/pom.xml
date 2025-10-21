@@ -20,11 +20,11 @@
     <dependencies>
         <dependency>
             <groupId>com.zzyl</groupId>
-            <artifactId>zzyl-common</artifactId>
+            <artifactId>zzyl-oss</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zzyl</groupId>
-            <artifactId>zzyl-oss</artifactId>
+            <artifactId>zzyl-framework</artifactId>
         </dependency>
     </dependencies>
 
