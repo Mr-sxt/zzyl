@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zzyl.common.constant.CacheConstants;
+import com.zzyl.common.core.page.TableDataInfo;
 import com.zzyl.common.utils.DateUtils;
 import com.zzyl.nursing.vo.NursingProjectVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +99,37 @@ public class NursingProjectServiceImpl extends ServiceImpl<NursingProjectMapper,
         redisTemplate.delete(CacheConstants.NURSING_PROJECTS_LIST_KEY);
         boolean b = removeByIds(Arrays.asList(ids));
         return b ? 1 : 0;
+    }
+
+    /**
+     * 根据名称和状态分页查询护理项目
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param name
+     * @param status
+     * @return
+     */
+    @Override
+    public TableDataInfo<NursingProject> pageByNameAndStaus(Integer pageNum, Integer pageSize, String name, Integer status) {
+        Page<NursingProject> page = new Page<>(pageNum, pageSize);
+        LambdaQueryWrapper<NursingProject> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(name != null, NursingProject::getName, name)
+                .eq(status != null,NursingProject::getStatus, status);
+        page = page(page, queryWrapper);
+
+        TableDataInfo<NursingProject> tableDataInfo = builderTableData(page);
+        return tableDataInfo;
+
+    }
+
+    private TableDataInfo<NursingProject> builderTableData(Page<NursingProject> page) {
+        TableDataInfo<NursingProject> tableDataInfo = new TableDataInfo<>();
+        tableDataInfo.setRows(page.getRecords());
+        tableDataInfo.setTotal(page.getTotal());
+        tableDataInfo.setCode(200);
+        tableDataInfo.setMsg("查询成功");
+        return tableDataInfo;
     }
 
     /**
